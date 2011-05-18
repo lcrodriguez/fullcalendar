@@ -282,7 +282,7 @@ function AgendaView(element, calendar, viewName) {
 			minutes = d.getMinutes();
 			var businessHourClass = "";
 			if (t.availability !== undefined) {
-				for(j=0; j<t.availability.length; j++) 
+				for(var j=0; j<t.availability.length; j++) 
 				{
 					if (d.getHours() >= t.availability[j].from && d.getHours() <= t.availability[j].to)
 						businessHourClass = "fc-bhours";
