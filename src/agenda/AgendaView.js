@@ -58,6 +58,7 @@ function AgendaView(element, calendar, viewName) {
 	t.reportDayClick = reportDayClick; // selection mousedown hack
 	t.dragStart = dragStart;
 	t.dragStop = dragStop;
+	t.availability = calendar.options.availability;
 	
 	
 	// imports
@@ -279,13 +280,21 @@ function AgendaView(element, calendar, viewName) {
 		slotCnt = 0;
 		for (i=0; d < maxd; i++) {
 			minutes = d.getMinutes();
+			var businessHourClass = "";
+			if (t.availability !== undefined) {
+				for(j=0; j<t.availability.length; j++) 
+				{
+					if (d.getHours() >= t.availability[j].from && d.getHours() <= t.availability[j].to)
+						businessHourClass = "fc-bhours";
+				}
+			}
 			s +=
 				"<tr class='fc-slot" + i + ' ' + (!minutes ? '' : 'fc-minor') + "'>" +
 				"<th class='fc-agenda-axis " + headerClass + "'>" +
 				((!slotNormal || !minutes) ? formatDate(d, opt('axisFormat')) : '&nbsp;') +
 				"</th>" +
 				"<td class='" + contentClass + "'>" +
-				"<div style='position:relative'>&nbsp;</div>" +
+				"<div style='position:relative' class='" + businessHourClass + "'>&nbsp;</div>" +
 				"</td>" +
 				"</tr>";
 			addMinutes(d, opt('slotMinutes'));
