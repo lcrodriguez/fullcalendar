@@ -25,7 +25,16 @@
 				right: 'month,agendaWeek,agendaDay'
 			},
 			editable: true,
-			availability: [ { from: 10, to: 12 }, { from: 15, to: 18} ],
+			availability: [ 
+				{ from: { hour:10, minutes: 0 }, to: { hour: 12, minutes:0 }, day: 0 }, 
+				{ from: { hour:10, minutes: 0 }, to: { hour: 12, minutes:0 }, day: 1 }, 
+				{ from: { hour:10, minutes: 0 }, to: { hour: 12, minutes:0 }, day: 2 }, 
+				{ from: { hour:10, minutes: 0 }, to: { hour: 12, minutes:0 }, day: 3 }, 
+				{ from: { hour:10, minutes: 0 }, to: { hour: 12, minutes:0 }, day: 4 }, 
+				{ from: { hour:10, minutes: 0 }, to: { hour: 12, minutes:0 }, day: 5 }, 
+				{ from: { hour:10, minutes: 0 }, to: { hour: 12, minutes:0 }, day: 6 } 
+				],
+			slotMinutes: 20,
 			events: [
 				{
 					title: 'All Day Event',

@@ -140,8 +140,11 @@
 .fc-agenda .ui-resizable-resizing { /* TODO: better selector */
 	_overflow: hidden;
 	}
+
+.fc-in-bhours {
+	background: #C0D890;
+}
 	
-.fc-bhours {
-	background: #F3B6B6;
-}	
-	
+.fc-out-bhours {
+	background: #EEE;
+}

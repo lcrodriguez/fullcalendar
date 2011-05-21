@@ -66,6 +66,7 @@ function AgendaView(element, calendar, viewName) {
 	OverlayManager.call(t);
 	SelectionManager.call(t);
 	AgendaEventRenderer.call(t);
+
 	var opt = t.opt;
 	var trigger = t.trigger;
 	var clearEvents = t.clearEvents;
@@ -280,21 +281,13 @@ function AgendaView(element, calendar, viewName) {
 		slotCnt = 0;
 		for (i=0; d < maxd; i++) {
 			minutes = d.getMinutes();
-			var businessHourClass = "";
-			if (t.availability !== undefined) {
-				for(var j=0; j<t.availability.length; j++) 
-				{
-					if (d.getHours() >= t.availability[j].from && d.getHours() <= t.availability[j].to)
-						businessHourClass = "fc-bhours";
-				}
-			}
 			s +=
 				"<tr class='fc-slot" + i + ' ' + (!minutes ? '' : 'fc-minor') + "'>" +
 				"<th class='fc-agenda-axis " + headerClass + "'>" +
 				((!slotNormal || !minutes) ? formatDate(d, opt('axisFormat')) : '&nbsp;') +
 				"</th>" +
 				"<td class='" + contentClass + "'>" +
-				"<div style='position:relative' class='" + businessHourClass + "'>&nbsp;</div>" +
+				"<div style='position:relative'>&nbsp;</div>" +
 				"</td>" +
 				"</tr>";
 			addMinutes(d, opt('slotMinutes'));
@@ -321,9 +314,30 @@ function AgendaView(element, calendar, viewName) {
 		var today = clearTime(new Date());
 		for (i=0; i<colCnt; i++) {
 			date = colDate(i);
+		
 			headCell = dayHeadCells.eq(i);
 			headCell.html(formatDate(date, colFormat));
 			bodyCell = dayBodyCells.eq(i);
+
+			if (t.availability !== undefined) {
+				$("td.fc-widget-content div").addClass(tm + '-out-bhours');
+				for(var j=0; j<t.availability.length; j++) 
+				{
+					if (date.getDay() == t.availability[j].day) 
+					{
+						var startDate = new Date(date.getFullYear(), date.getMonth(), date.getDate(), t.availability[j].from.hour, t.availability[j].from.minutes);
+						var endDate = new Date(date.getFullYear(), date.getMonth(), date.getDate(), t.availability[j].to.hour, t.availability[j].to.minutes);
+
+						// We should assign a class to the corresponding cells given the slots.
+						var slotStart = slotPosition(startDate, startDate);
+						var slotEnd = slotPosition(endDate, endDate);
+
+						for(var k=slotStart; k<=slotEnd; k++)
+							$("tr.fc-slot" + k + " td.fc-widget-content div").addClass(tm + "-in-bhours").removeClass(tm + "-out-bhours");
+					}	
+				}
+			}
+
 			if (+date == +today) {
 				bodyCell.addClass(tm + '-state-highlight fc-today');
 			}else{
@@ -632,7 +646,22 @@ function AgendaView(element, calendar, viewName) {
 			slotTop - 1 + slotHeight * ((minutes % slotMinutes) / slotMinutes)
 		));
 	}
-	
+
+	function slotPosition(day, time) { // both date objects. day holds 00:00 of current day
+		day = cloneDate(day, true);
+		if (time < addMinutes(cloneDate(day), minMinute)) {
+			return 0;
+		}
+		if (time >= addMinutes(cloneDate(day), maxMinute)) {
+			return slotTable.height();
+		}
+
+		var slotMinutes = opt('slotMinutes'),
+			minutes = time.getHours()*60 + time.getMinutes() - minMinute,
+			slotI = Math.floor(minutes / slotMinutes);
+		
+		return slotI;
+	}
 	
 	function allDayBounds() {
 		return {
