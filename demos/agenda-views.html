@@ -27,14 +27,17 @@
 			editable: true,
 			availability: [ 
 				{ from: { hour:10, minutes: 0 }, to: { hour: 12, minutes:0 }, day: 0 }, 
-				{ from: { hour:10, minutes: 0 }, to: { hour: 12, minutes:0 }, day: 1 }, 
+				{ from: { hour:15, minutes: 20 }, to: { hour: 16, minutes:0 }, day: 1 }, 
 				{ from: { hour:10, minutes: 0 }, to: { hour: 12, minutes:0 }, day: 2 }, 
-				{ from: { hour:10, minutes: 0 }, to: { hour: 12, minutes:0 }, day: 3 }, 
-				{ from: { hour:10, minutes: 0 }, to: { hour: 12, minutes:0 }, day: 4 }, 
-				{ from: { hour:10, minutes: 0 }, to: { hour: 12, minutes:0 }, day: 5 }, 
-				{ from: { hour:10, minutes: 0 }, to: { hour: 12, minutes:0 }, day: 6 } 
+				{ from: { hour:16, minutes: 40 }, to: { hour: 20, minutes:20 }, day: 3 }, 
+				{ from: { hour:8, minutes: 0 }, to: { hour: 9, minutes:0 }, day: 4 }, 
+				{ from: { hour:3, minutes: 0 }, to: { hour: 4, minutes:0 }, day: 5 }, 
+				{ from: { hour:15, minutes: 0 }, to: { hour: 22, minutes:0 }, day: 6 } 
 				],
 			slotMinutes: 20,
+			firstHour: 8,
+			minTime: 8,
+			maxTime: 22,
 			events: [
 				{
 					title: 'All Day Event',

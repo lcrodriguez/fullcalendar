@@ -332,7 +332,7 @@ function AgendaView(element, calendar, viewName) {
 						var slotStart = slotPosition(startDate, startDate);
 						var slotEnd = slotPosition(endDate, endDate);
 
-						for(var k=slotStart; k<=slotEnd; k++)
+						for(var k=slotStart; k<slotEnd; k++)
 							$("tr.fc-slot" + k + " td.fc-widget-content div").addClass(tm + "-in-bhours").removeClass(tm + "-out-bhours");
 					}	
 				}
